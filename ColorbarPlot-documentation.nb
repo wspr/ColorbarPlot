@@ -1,0 +1,1366 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     44350,       1357]
+NotebookOptionsPosition[     40474,       1233]
+NotebookOutlinePosition[     40986,       1255]
+CellTagsIndexPosition[     40900,       1250]
+WindowFrame->Generic*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["ColorbarPlot Examples", "Section",
+ CellChangeTimes->{{3.40045681375132*^9, 3.4004568168357553`*^9}, {
+  3.400460892195835*^9, 3.4004608941887007`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"<<", "ColorbarPlot`"}], "\[IndentingNewLine]", 
+ RowBox[{"?", "ColorbarPlot"}]}], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"ColorbarPlot[ F[#1,#2] & , {Xmin, Xmax} , {Ymin, Ymax} , \
+<options> ]:\\n  Creates a DensityPlot or a ContourPlot or a 3DPlot of the\\n \
+ function F with an attached colorbar to denote its range.\\n\\nColorbarPlot[ \
+{{x1, y1, \[Ellipsis]}, {x2, y2, \[Ellipsis]}, \[Ellipsis]} , <options> ]:\\n \
+ Creates the List-based versions of the plots above.\\n  (E.g., \
+ListContourPlot, ListPlot3D, etc.)\\n\\nThis is a list of options that \
+ColorbarPlot accepts and their\\ndefault options. Where multiple options are \
+listed, the first \\nis the default:\\n\\nGeneral:\\n  PlotType \[Rule] \
+\\\"Density\\\" | \\\"Contour\\\" | \\\"3D\\\" | \\\"Point3D\\\"\\n  \
+ColorFunction \[Rule] \\\"LakeColors\\\" | etc. \[Ellipsis] \\n  PlotRange \
+\[Rule] Automatic | {min,max}\\n\\nFor the plot:\\n  XLabel \[Rule] \
+\\\"\\\"\\n  YLabel \[Rule] \\\"\\\"\\n  ZLabel \[Rule] \\\"\\\"\\n  Title \
+\[Rule] \\\"\\\"\\n  Height \[Rule] 8*72/2.54  (=8cm)\\n\\nFor the \
+colorbar:\\n  CLabel \[Rule] \\\"\\\"\\n  CTicks \[Rule] All\\n  CTickSide \
+\[Rule] Left | Right\\n  CSide \[Rule] Right | Left\\n  \
+CTicksStyle->Automatic\\n  CLabelStyle->Automatic\\n  ColorbarOpts \[Rule] {}\
+\\n\\n\\nUnknown options to ColorbarPlot are passed transparently\\nto the \
+underlying plot function. Note that such options\\nare -not- passed to the \
+colorbar; use the ColorbarOpts \\noption for this purpose instead.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellChangeTimes->{3.464425125239917*^9},
+ CellTags->"Info3464428723-6982589"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Overview", "Subsection",
+ CellChangeTimes->{{3.4022647565623245`*^9, 3.4022647579643407`*^9}}],
+
+Cell[TextData[{
+ "Here is a quick summary of the types of plots the ",
+ StyleBox["ColorbarPlot", "Input"],
+ " package can generate.\nHere are the function-based plots with 2D inputs:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"#1", "^", "2"}], "+", 
+       RowBox[{"#2", "^", "2"}]}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotType", "\[Rule]", "pt"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"CSide", "\[Rule]", "cs"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"CTickSide", "\[Rule]", "ct"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ColorFunction", "\[Rule]", "col"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotRange", "\[Rule]", "cr"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"pt", ",", "\"\<Density\>\"", ",", "\"\<PlotType\>\""}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Contour\>\"", ",", "\"\<Density\>\"", ",", "\"\<3D\>\""}], 
+      "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cs", ",", "Right", ",", "\"\<Bar location\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Left", ",", "Right"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ct", ",", "Left", ",", "\"\<Bar Ticks\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Left", ",", "Right"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cr", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "120"}], "}"}], ",", "\"\<Plot range\>\""}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "50"}], ",", "120"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "150"}], "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "col", ",", "\"\<LakeColors\>\"", ",", "\"\<ColorFunction\>\""}], "}"}],
+      ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<DarkBands\>\"", ",", "\"\<LakeColors\>\"", ",", "\"\<Pastel\>\"", 
+       ",", "\"\<Rainbow\>\"", ",", "\"\<SolarColors\>\"", ",", 
+       "\"\<StarryNightColors\>\"", ",", "\"\<TemperatureMap\>\""}], "}"}]}], 
+    "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"ControlPlacement", "\[Rule]", "Left"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input"],
+
+Cell["Here are the list-based plots with 2D inputs:", "Text"],
+
+Cell[BoxData[{
+ RowBox[{"datafn", ":=", 
+  RowBox[{
+   RowBox[{"Sin", "[", 
+    RowBox[{
+     RowBox[{"#1", "/", "5"}], " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"#2", "/", "5"}], ")"}], "^", "2"}]}], "]"}], 
+   "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"data2", "=", 
+   RowBox[{"Join", "@@", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        RowBox[{"datafn", "[", 
+         RowBox[{"x", ",", "y"}], "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", 
+        RowBox[{"-", "20"}], ",", "20"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"y", ",", 
+        RowBox[{"-", "10"}], ",", "10"}], "}"}]}], "]"}]}]}], ";"}]}], "Input"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"data2", ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotType", "\[Rule]", "pt"}], ",", 
+     RowBox[{"CSide", "\[Rule]", "cs"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"CTickSide", "\[Rule]", "ct"}], ",", 
+     RowBox[{"ColorFunction", "\[Rule]", "col"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotRange", "\[Rule]", "cr"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"pt", ",", "\"\<Density\>\"", ",", "\"\<PlotType\>\""}], "}"}], 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<Contour\>\"", ",", "\"\<Density\>\"", ",", "\"\<3D\>\"", ",", 
+       "\"\<Point3D\>\""}], "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cs", ",", "Right", ",", "\"\<Bar location\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Left", ",", "Right"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ct", ",", "Left", ",", "\"\<Bar Ticks\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Left", ",", "Right"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cr", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", "\"\<Plot range\>\""}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "5"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "5"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "col", ",", "\"\<LakeColors\>\"", ",", "\"\<ColorFunction\>\""}], "}"}],
+      ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<DarkBands\>\"", ",", "\"\<LakeColors\>\"", ",", "\"\<Pastel\>\"", 
+       ",", "\"\<Rainbow\>\"", ",", "\"\<SolarColors\>\"", ",", 
+       "\"\<StarryNightColors\>\"", ",", "\"\<TemperatureMap\>\""}], "}"}]}], 
+    "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"ControlPlacement", "\[Rule]", "Left"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Defaults", "Subsection",
+ CellChangeTimes->{{3.400456831166362*^9, 3.4004568318673697`*^9}, 
+   3.400460905625146*^9}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"#1", "^", "2"}], "+", 
+     RowBox[{"#2", "^", "2"}]}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "5"}], ",", "5"}], "}"}]}], "]"}]], "Input"],
+
+Cell["\<\
+Inline functions don't have to be used; any function that takes two arguments \
+is allowed. Axis plot ranges may be prefixed by a meaningless label \
+(meaningless with respect to syntax, that is):\
+\>", "Text",
+ CellChangeTimes->{{3.4004621347124863`*^9, 3.400462163143368*^9}, {
+  3.4016846755459633`*^9, 3.401684724566451*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"f", ":=", 
+  RowBox[{
+   RowBox[{"Sin", "[", 
+    RowBox[{
+     RowBox[{"#1", "^", "2"}], "+", 
+     RowBox[{"#2", "^", "2"}]}], "]"}], "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{"f", ",", 
+   RowBox[{"{", 
+    RowBox[{"a", ",", 
+     RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"b", ",", 
+     RowBox[{"-", "5"}], ",", "5"}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.4004534981937823`*^9, 3.400453522939365*^9}, {
+   3.400453588243267*^9, 3.4004535996696978`*^9}, {3.4004536323667135`*^9, 
+   3.4004536453854337`*^9}, {3.4004537591289887`*^9, 
+   3.4004538013396845`*^9}, {3.4004538466548448`*^9, 3.400453866713688*^9}, {
+   3.400454715514203*^9, 3.400454721042152*^9}, {3.400454768510408*^9, 
+   3.400454833834339*^9}, {3.4004548707474174`*^9, 3.4004548775872526`*^9}, {
+   3.4004549204689136`*^9, 3.400455042474349*^9}, {3.400455087659322*^9, 
+   3.400455115098778*^9}, {3.4004551616356945`*^9, 3.4004551631879263`*^9}, {
+   3.4004552172056*^9, 3.4004552731760817`*^9}, {3.4004553222466416`*^9, 
+   3.4004553303482914`*^9}, 3.4004553846063104`*^9, {3.400456065505395*^9, 
+   3.400456094987789*^9}, {3.400456791929942*^9, 3.400456792240389*^9}, {
+   3.4004621648758593`*^9, 3.400462264138592*^9}, {3.401683662208856*^9, 
+   3.4016836692289505`*^9}}],
+
+Cell["List-like plots are automatically recognised:", "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"data2d", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"Sin", "[", 
+      RowBox[{"x", " ", 
+       RowBox[{"y", "^", "2"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", 
+       RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"ColorbarPlot", "[", "data2d", "]"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Basic options", "Subsection",
+ CellChangeTimes->{{3.4004568356728415`*^9, 3.400456840820243*^9}}],
+
+Cell["Labels and things:", "Text"],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"#1", "^", "2"}], "+", 
+     RowBox[{"#2", "^", "2"}]}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorFunction", "\[Rule]", "\"\<DarkBands\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"XLabel", "\[Rule]", "\"\<x\>\""}], ",", "\[IndentingNewLine]", 
+   RowBox[{"YLabel", "\[Rule]", "\"\<y\>\""}], ",", "\[IndentingNewLine]", 
+   RowBox[{"Title", "\[Rule]", "\"\<Title\>\""}], ",", "\[IndentingNewLine]", 
+   RowBox[{"CLabel", "\[Rule]", "\"\<Range\>\""}], ",", "\[IndentingNewLine]", 
+   RowBox[{"Height", "\[Rule]", "300"}]}], "]"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Plot range", "Subsection"],
+
+Cell["\<\
+Plots that are to be directly compared should be plotted with the same \
+colorbars. To do this we explicitly choose the plot range:\
+\>", "Text"],
+
+Cell[BoxData[{
+ RowBox[{"f1", ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sqrt", "[", 
+     RowBox[{
+      RowBox[{"#1", "^", "2"}], "+", 
+      RowBox[{"#2", "^", "2"}]}], "]"}], "-", "1"}], 
+   "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f1", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"0.5", 
+       RowBox[{"f1", "[", 
+        RowBox[{"#1", ",", "#2"}], "]"}]}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "0.4"}], "}"}]}]}], "]"}]}], "}"}]}], "Input"],
+
+Cell["\<\
+Note that if the plot range is smaller than the bounds of the plot, the plot \
+will be truncated:\
+\>", "Text"],
+
+Cell[BoxData[{
+ RowBox[{"f1", ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sqrt", "[", 
+     RowBox[{
+      RowBox[{"#1", "^", "2"}], "+", 
+      RowBox[{"#2", "^", "2"}]}], "]"}], "-", "1"}], 
+   "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{"f2", ":=", 
+  RowBox[{
+   RowBox[{"0.5", 
+    RowBox[{"f1", "[", 
+     RowBox[{"#1", ",", "#2"}], "]"}]}], "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f1", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f2", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "0.2"}], ",", "0.1"}], "}"}]}]}], "]"}]}], 
+  "}"}]}], "Input"],
+
+Cell[TextData[{
+ StyleBox["PlotRange", "Input"],
+ " takes options in the following forms: (",
+ StyleBox["Automatic", "Input"],
+ " can also be used instead of ",
+ StyleBox["Full", "Input"],
+ ")"
+}], "Text"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{"ColorbarPlot", ",", 
+    RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+    RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f1", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", "Full"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f1", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1.5"}], ",", "Full"}], "}"}]}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f1", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Full", ",", "0.8"}], "}"}]}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{"f1", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1.5"}], ",", "0.8"}], "}"}]}]}], "]"}]}], 
+  "}"}]}], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Customisation options", "Subsection",
+ CellChangeTimes->{{3.4016888619557247`*^9, 3.401688865610981*^9}}],
+
+Cell[TextData[{
+ "Ticks on the colorbar are specified with ",
+ StyleBox["CTicks", "Input"],
+ ":"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"CTicks", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "0.25"}], ",", "0", ",", "0.75"}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"CSide", "\[Rule]", "Left"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"CTickSide", "\[Rule]", "Right"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.4016888962650595`*^9, 3.4016889341295056`*^9}, {
+  3.401689350788632*^9, 3.4016893586098785`*^9}, {3.4016893950122223`*^9, 
+  3.401689529725931*^9}, {3.401689596572051*^9, 3.4016896524824467`*^9}}],
+
+Cell[TextData[{
+ "Ticks follow contours if explicit contours are specified with the ",
+ StyleBox["Contours", "Input"],
+ " option:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Contours", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "0.25"}], ",", "0", ",", "0.75"}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"CSide", "\[Rule]", "Left"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"CTickSide", "\[Rule]", "Right"}]}], "]"}]], "Input"],
+
+Cell[TextData[{
+ "This also works with the ",
+ StyleBox["Plot", "Input"],
+ StyleBox["Range", "Input"],
+ " option:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Contours", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "0.25"}], ",", "0", ",", "0.75"}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "0.3"}], ",", "0.8"}], "}"}]}]}], "]"}]], "Input"],
+
+Cell[TextData[{
+ "You can change the style of the colorbar ticks using the ",
+ StyleBox["CTicksStyle ", "Input"],
+ "option:"
+}], "Text",
+ CellChangeTimes->{{3.464424316765661*^9, 3.46442441236893*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"CTicksStyle", "\[Rule]", "Bold"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.464424446461749*^9, 3.464424463244908*^9}}],
+
+Cell[TextData[{
+ "The style of the colorbar label is controlled by the ",
+ StyleBox["CLabelStyle ", "Input"],
+ "option:"
+}], "Text",
+ CellChangeTimes->{{3.464424316765661*^9, 3.46442441236893*^9}, {
+  3.464424499073965*^9, 3.464424526695696*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"CLabel", "\[Rule]", "\"\<Hello\>\""}], ",", "\[IndentingNewLine]", 
+   RowBox[{"CLabelStyle", "\[Rule]", 
+    RowBox[{"FontSize", "\[Rule]", "20"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.464424536857383*^9, 3.464424553789928*^9}, {
+  3.464424611526737*^9, 3.464424758361296*^9}, {3.464425154139994*^9, 
+  3.464425157398935*^9}}],
+
+Cell[TextData[{
+ "Combine multiple style elements together with ",
+ StyleBox["Directive ", "Input"]
+}], "Text",
+ CellChangeTimes->{{3.464424316765661*^9, 3.46442441236893*^9}, {
+  3.464424499073965*^9, 3.464424526695696*^9}, {3.464425184801787*^9, 
+  3.46442523653036*^9}, {3.464428213233888*^9, 3.464428216728619*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Sin", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"CLabel", "\[Rule]", "\"\<Hello\>\""}], ",", "\[IndentingNewLine]", 
+   RowBox[{"CLabelStyle", "\[Rule]", 
+    RowBox[{"Directive", "[", 
+     RowBox[{"Red", ",", "Italic", ",", "Bold", ",", 
+      RowBox[{"FontSize", "\[Rule]", "20"}]}], "]"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"CTicksStyle", "\[Rule]", 
+    RowBox[{"Directive", "[", 
+     RowBox[{"Green", ",", 
+      RowBox[{"FontFamily", "\[Rule]", "\"\<Helvetica\>\""}]}], "]"}]}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.464425241054441*^9, 3.464425274541934*^9}, {
+  3.464425315010121*^9, 3.464425326070002*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Passing options through to the plot", "Subsection"],
+
+Cell[TextData[{
+ "Options unknown to ",
+ StyleBox["ColorbarPlot", "Input"],
+ " are passed directly to ",
+ StyleBox["the underlying plot function",
+  FontWeight->"Plain"],
+ ":"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{"f", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+   RowBox[{"ColorFunction", "\[Rule]", "\"\<Rainbow\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"FrameLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"\"\<a\>\"", ",", "\"\<b\>\""}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"\"\<c\>\"", ",", "\"\<d\>\""}], "}"}]}], "}"}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"MaxRecursion", "\[Rule]", "1"}], ",", 
+   RowBox[{"PlotPoints", "\[Rule]", "4"}]}], "]"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Passing options to the colorbar", "Subsection",
+ CellChangeTimes->{{3.401682977123752*^9, 3.4016829855358477`*^9}}],
+
+Cell[TextData[{
+ "Most of the options passed to the main plot will not want to be passed onto \
+the colorbar itself (which is a plot in its own right). Some are passed \
+automatically (colour, height, contour ticks). Anything else needs to be \
+passed explicitly with the ",
+ StyleBox["ColorbarOpts", "Input"],
+ " option:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Exp", "[", 
+     RowBox[{"#1", " ", "#2"}], "]"}], "&"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"AspectRatio", "\[Rule]", "0.8"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"ColorbarOpts", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"AspectRatio", "\[Rule]", "5"}], "}"}]}]}], "]"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\[OpenCurlyQuote]Padding\[CloseCurlyQuote] the colorbar", "Subsection"],
+
+Cell["\<\
+If the title of the main plot uses lots of space, then you'll want to add \
+padding to the colorbar:\
+\>", "Text"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Sin", "[", 
+       RowBox[{"#1", "+", 
+        RowBox[{"#2", "^", "2"}]}], "]"}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "3"}], "}"}], ",", 
+     RowBox[{"PlotLabel", "\[Rule]", 
+      RowBox[{"Style", "[", 
+       RowBox[{"\"\<Large title\>\"", ",", 
+        RowBox[{"FontSize", "\[Rule]", "28"}]}], "]"}]}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Sin", "[", 
+       RowBox[{"#1", "+", 
+        RowBox[{"#2", "^", "2"}]}], "]"}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "3"}], "}"}], ",", 
+     RowBox[{"PlotLabel", "\[Rule]", 
+      RowBox[{"Style", "[", 
+       RowBox[{"\"\<Large title\>\"", ",", 
+        RowBox[{"FontSize", "\[Rule]", "28"}]}], "]"}]}], ",", 
+     RowBox[{"CPadding", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"30", ",", "40"}], "}"}]}]}], "]"}]}], "}"}]], "Input"],
+
+Cell[TextData[{
+ "Unfortunately, this feature is only half-baked. (More due a limitation of ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ "'s ",
+ StyleBox["ImagePadding", "Input"],
+ " than laziness on our part.) This technique spoils the vertical alignment \
+of the colorbar and it only works if the colorbar ticks are on the inside:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"#1", "^", "2"}], "+", 
+       RowBox[{"#2", "^", "2"}]}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"CPadding", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"hp", ",", "vp"}], "}"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"CSide", "\[Rule]", "cs"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"CTickSide", "\[Rule]", "ct"}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cs", ",", "Left", ",", "\"\<Bar location\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Left", ",", "Right"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"ct", ",", "Left", ",", "\"\<Bar Ticks\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"Left", ",", "Right"}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"hp", ",", "30", ",", "\"\<horiz\>\""}], "}"}], ",", "0", ",", 
+     "100", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"vp", ",", "20", ",", "\"\<vert\>\""}], "}"}], ",", "0", ",", 
+     "100", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input"],
+
+Cell[TextData[{
+ "You can fine-tune things by specifying the ",
+ StyleBox["ImagePadding", "Input"],
+ " of the colorbar manually:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"ColorbarPlot", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"#1", "^", "2"}], "+", 
+       RowBox[{"#2", "^", "2"}]}], "&"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"CSide", "\[Rule]", "Left"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"ColorbarOpts", "->", 
+      RowBox[{"{", 
+       RowBox[{"ImagePadding", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"l", ",", "r"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"u", ",", "d"}], "}"}]}], "}"}]}], "}"}]}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"l", ",", "20", ",", "\"\<left\>\""}], "}"}], ",", "0", ",", 
+     "40", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "0", ",", "\"\<right\>\""}], "}"}], ",", "0", ",", 
+     "40", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"u", ",", "30", ",", "\"\<up\>\""}], "}"}], ",", "0", ",", "60",
+      ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d", ",", "20", ",", "\"\<down\>\""}], "}"}], ",", "0", ",", 
+     "40", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Caveat with RegionFunction", "Subsection"],
+
+Cell["\<\
+There are some problems with typical plot options that ColorbarPlot doesn't \
+(yet) try to fix. I'd like to roll the workarounds shown below into the \
+package so that the options work transparently, but that won't happen today.\
+\>", "Text",
+ CellChangeTimes->{{3.400975169624221*^9, 3.400975219816394*^9}}],
+
+Cell[TextData[{
+ "First of all, the ",
+ StyleBox["RegionFunction", "Input"],
+ " option doesn't take the colorbar into account: \n(note how the colorbar \
+extends outside the range of colors shown in the plot)"
+}], "Text",
+ CellChangeTimes->{{3.400462358994989*^9, 3.400462388617584*^9}, {
+  3.4004630425278606`*^9, 3.4004630593520527`*^9}, {3.400974747216829*^9, 
+  3.400974753676117*^9}, {3.40097523339592*^9, 3.4009752338665967`*^9}, {
+  3.4014891461652946`*^9, 3.401489187434637*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetOptions", "[", 
+   RowBox[{"ColorbarPlot", ",", 
+    RowBox[{"PlotType", "\[Rule]", "\"\<Contour\>\""}]}], "]"}], 
+  ";"}]], "Input"],
+
+Cell[BoxData[{
+ RowBox[{"fn", ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"#1", "^", "2"}], "-", 
+    RowBox[{"#2", "^", "2"}]}], "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{"region", ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"#1", "^", "2"}], "+", 
+    RowBox[{"#2", "^", "2"}]}], "&"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{"f", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"RegionFunction", "\[Rule]", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"1", "<", 
+        RowBox[{"region", "[", 
+         RowBox[{"#1", ",", "#2"}], "]"}]}], "&"}], "<", "6"}], ")"}]}]}], 
+  "]"}]}], "Input"],
+
+Cell[TextData[{
+ "This problem can be solved by explicitly including the ",
+ StyleBox["RegionFunction", "Input"],
+ " with the function that is being contoured."
+}], "Text",
+ CellChangeTimes->{{3.400974609679059*^9, 3.4009746171498013`*^9}, {
+  3.4014893267249265`*^9, 3.401489361114376*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "<", 
+        RowBox[{"region", "[", 
+         RowBox[{"#1", ",", "#2"}], "]"}], "<", "6"}], ")"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"fn", "[", 
+       RowBox[{"#1", ",", "#2"}], "]"}], ",", 
+      RowBox[{"{", "}"}]}], "]"}], "&"}], "\[IndentingNewLine]", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "]"}]], "Input"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Miscellaneous ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " musings"
+}], "Section",
+ CellChangeTimes->{{3.4014904168724813`*^9, 3.4014904413877325`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["How to arrange two graphs inside a graphic", "Subsection",
+ CellChangeTimes->{
+  3.4014884737684355`*^9, {3.4014887255404654`*^9, 3.4014887529498787`*^9}}],
+
+Cell[TextData[{
+ StyleBox["GraphicsRow", "Input"],
+ " is only suitable if the graphs are similarly sized. For our case, the \
+colorbar is much smaller (horizontally) than the main graph. ",
+ StyleBox["Row", "Input"],
+ " produces what we want, but the result isn't a ",
+ StyleBox["Graphic", "Input"],
+ ", and hence can't be included in things like ",
+ StyleBox["MathPSfrag", "Input"],
+ ". The trick is to use ",
+ StyleBox["Inset", "Input"],
+ " to place the ",
+ StyleBox["Row", "Input"],
+ " output inside a ",
+ StyleBox["Graphic", "Input"],
+ " and then size it accordingly."
+}], "Text",
+ CellChangeTimes->{{3.4014887590887055`*^9, 3.4014888732128077`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"g1", "=", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"Sin", "[", "x", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", 
+       RowBox[{"2", " ", "\[Pi]"}]}], "}"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Automatic", ",", "150"}], "}"}]}]}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"g2", "=", 
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"Cos", "[", "x", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", 
+       RowBox[{"2", " ", "\[Pi]"}]}], "}"}], ",", 
+     RowBox[{"ImageSize", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"Automatic", ",", "150"}], "}"}]}], ",", 
+     RowBox[{"AspectRatio", "\[Rule]", "5"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Graphics", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"Inset", "[", 
+     RowBox[{
+      RowBox[{"Row", "[", 
+       RowBox[{"{", 
+        RowBox[{"g1", ",", "g2"}], "}"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}]}], "]"}], "}"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"Automatic", ",", "150"}], "}"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.401488476762741*^9, 3.4014885367089396`*^9}, {
+  3.4014885809325294`*^9, 3.4014886039456205`*^9}, {3.401488669249523*^9, 
+  3.401488723217125*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["How to parse and pass options between multiple functions", "Subsection",
+ CellChangeTimes->{{3.401489448159541*^9, 3.4014894549292755`*^9}, {
+  3.4014904517025647`*^9, 3.401490467455216*^9}}],
+
+Cell["\<\
+First define a function that will be used to pass options to:\
+\>", "Text",
+ CellChangeTimes->{{3.4014910185676765`*^9, 3.401491028231573*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "g", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"b", "\[Rule]", "b0"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"g", "[", 
+   RowBox[{"OptionsPattern", "[", "]"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"g", ":", 
+    RowBox[{"OptionValue", "[", "b", "]"}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"g", "[", "]"}], ",", 
+   RowBox[{"g", "[", 
+    RowBox[{"b", "\[Rule]", "bbb"}], "]"}]}], "}"}]}], "Input",
+ CellChangeTimes->{{3.4014909540448976`*^9, 3.401491084242112*^9}, {
+  3.401491240717112*^9, 3.401491241037573*^9}}],
+
+Cell[TextData[{
+ "Now we want a wrapper function that takes its own options and passes those \
+applicable to the function ",
+ StyleBox["g", "Code"],
+ ". The naive way of filtering the options produces warning messages that we \
+certainly don't want:"
+}], "Text",
+ CellChangeTimes->{{3.401491098783021*^9, 3.401491182142886*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "h", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"c", "\[Rule]", "c0"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"h", "[", 
+   RowBox[{"opts", ":", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"g", "[", 
+       RowBox[{"Evaluate", "[", 
+        RowBox[{"FilterRules", "[", 
+         RowBox[{
+          RowBox[{"{", "opts", "}"}], ",", 
+          RowBox[{"Options", "[", "g", "]"}]}], "]"}], "]"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"h", ":", 
+        RowBox[{"OptionValue", "[", "c", "]"}]}], "}"}]}], "}"}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"h", "[", 
+  RowBox[{"b", "\[Rule]", "bbb"}], "]"}], "\n", 
+ RowBox[{"h", "[", 
+  RowBox[{
+   RowBox[{"b", "\[Rule]", "bbb"}], ",", 
+   RowBox[{"c", "\[Rule]", "ccc"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.401489457533019*^9, 3.4014894577132783`*^9}, 
+   3.4014895245593987`*^9, {3.4014912328558083`*^9, 3.401491237832965*^9}}],
+
+Cell["\<\
+A workaround is to pre-filter the options list for each function that you're \
+passing options to:\
+\>", "Text",
+ CellChangeTimes->{{3.401489490800856*^9, 3.4014895193018384`*^9}, 
+   3.4014903850467186`*^9, {3.401490710514718*^9, 3.401490730533504*^9}, {
+   3.4014908245086336`*^9, 3.401490825219656*^9}, {3.4014911738609776`*^9, 
+   3.40149117407128*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "h", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Options", "[", "h", "]"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"c", "\[Rule]", "c0"}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"h", "[", 
+   RowBox[{"opts", ":", 
+    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "Opt", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"gopts", "=", 
+      RowBox[{"FilterRules", "[", 
+       RowBox[{
+        RowBox[{"{", "opts", "}"}], ",", 
+        RowBox[{"Options", "[", "g", "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"hopts", "=", 
+      RowBox[{"FilterRules", "[", 
+       RowBox[{
+        RowBox[{"{", "opts", "}"}], ",", 
+        RowBox[{"Options", "[", "h", "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Opt", "[", "x_", "]"}], ":=", 
+      RowBox[{"OptionValue", "[", 
+       RowBox[{"h", ",", "hopts", ",", "x"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"g", "[", "gopts", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"h", ":", 
+         RowBox[{"Opt", "[", "c", "]"}]}], "}"}]}], "}"}]}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"h", "[", 
+  RowBox[{"b", "\[Rule]", "bbb"}], "]"}], "\n", 
+ RowBox[{"h", "[", 
+  RowBox[{
+   RowBox[{"b", "\[Rule]", "bbb"}], ",", 
+   RowBox[{"c", "\[Rule]", "ccc"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.4014895262117743`*^9, 3.4014895306882114`*^9}, 
+   3.4014903483940144`*^9, {3.401490810919093*^9, 3.4014908124312673`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["How to discover what ColorFunctions are built in", "Subsection",
+ CellChangeTimes->{{3.401489448159541*^9, 3.4014894549292755`*^9}, {
+  3.4014904517025647`*^9, 3.401490467455216*^9}, {3.402202967921875*^9, 
+  3.40220298209375*^9}}],
+
+Cell["\<\
+It may be obvious to some but it took me a while to find this information \
+out.  ColorData[] gives a  of named collections of color schemes\
+\>", "Text",
+ CellChangeTimes->{{3.402202985421875*^9, 3.402203092203125*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorData", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.402203007*^9, 3.402203009546875*^9}}],
+
+Cell["The Gradients set is what we need", "Text",
+ CellChangeTimes->{{3.40220310684375*^9, 3.4022031375625*^9}, {
+  3.402203200359375*^9, 3.402203209046875*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorData", "[", "\"\<Gradients\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.402203075140625*^9, 3.4022030806875*^9}}]
+}, Open  ]]
+}, Closed]]
+},
+WindowSize->{1280, 949},
+WindowMargins->{{0, Automatic}, {Automatic, 25}},
+ShowSelection->True,
+FrontEndVersion->"7.0 for Linux x86 (32-bit) (February 25, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3464428723-6982589"->{
+  Cell[869, 32, 1538, 22, 784, "Print",
+   CellTags->"Info3464428723-6982589"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3464428723-6982589", 40796, 1244}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[568, 22, 158, 2, 73, "Section"],
+Cell[CellGroupData[{
+Cell[751, 28, 115, 2, 55, "Input"],
+Cell[869, 32, 1538, 22, 784, "Print",
+ CellTags->"Info3464428723-6982589"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2444, 59, 100, 1, 39, "Subsection"],
+Cell[2547, 62, 195, 4, 51, "Text"],
+Cell[2745, 68, 2488, 68, 319, "Input"],
+Cell[5236, 138, 61, 0, 31, "Text"],
+Cell[5300, 140, 730, 24, 55, "Input"],
+Cell[6033, 166, 2244, 62, 275, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8314, 233, 124, 2, 39, "Subsection"],
+Cell[8441, 237, 338, 12, 32, "Input"],
+Cell[8782, 251, 339, 6, 31, "Text"],
+Cell[9124, 259, 1345, 27, 55, "Input"],
+Cell[10472, 288, 61, 0, 31, "Text"],
+Cell[10536, 290, 476, 15, 55, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11049, 310, 103, 1, 39, "Subsection"],
+Cell[11155, 313, 34, 0, 31, "Text"],
+Cell[11192, 315, 902, 21, 187, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12131, 341, 32, 0, 39, "Subsection"],
+Cell[12166, 343, 155, 3, 31, "Text"],
+Cell[12324, 348, 1010, 35, 77, "Input"],
+Cell[13337, 385, 121, 3, 31, "Text"],
+Cell[13461, 390, 1056, 37, 99, "Input"],
+Cell[14520, 429, 205, 7, 31, "Text"],
+Cell[14728, 438, 1759, 56, 121, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16524, 499, 111, 1, 39, "Subsection"],
+Cell[16638, 502, 108, 4, 31, "Text"],
+Cell[16749, 508, 801, 19, 99, "Input"],
+Cell[17553, 529, 142, 4, 31, "Text"],
+Cell[17698, 535, 671, 18, 121, "Input"],
+Cell[18372, 555, 126, 5, 31, "Text"],
+Cell[18501, 562, 674, 20, 99, "Input"],
+Cell[19178, 584, 201, 5, 31, "Text"],
+Cell[19382, 591, 505, 13, 77, "Input"],
+Cell[19890, 606, 246, 6, 31, "Text"],
+Cell[20139, 614, 719, 17, 99, "Input"],
+Cell[20861, 633, 319, 6, 31, "Text"],
+Cell[21183, 641, 995, 24, 143, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22215, 670, 57, 0, 39, "Subsection"],
+Cell[22275, 672, 187, 7, 31, "Text"],
+Cell[22465, 681, 700, 20, 77, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23202, 706, 121, 1, 39, "Subsection"],
+Cell[23326, 709, 334, 7, 51, "Text"],
+Cell[23663, 718, 579, 15, 99, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24279, 738, 77, 0, 39, "Subsection"],
+Cell[24359, 740, 124, 3, 31, "Text"],
+Cell[24486, 745, 1145, 34, 55, "Input"],
+Cell[25634, 781, 353, 8, 51, "Text"],
+Cell[25990, 791, 1777, 50, 253, "Input"],
+Cell[27770, 843, 141, 4, 31, "Text"],
+Cell[27914, 849, 1922, 55, 231, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29873, 909, 48, 0, 39, "Subsection"],
+Cell[29924, 911, 318, 5, 51, "Text"],
+Cell[30245, 918, 487, 9, 51, "Text"],
+Cell[30735, 929, 171, 5, 32, "Input"],
+Cell[30909, 936, 787, 26, 99, "Input"],
+Cell[31699, 964, 291, 6, 31, "Text"],
+Cell[31993, 972, 621, 19, 99, "Input"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32663, 997, 180, 6, 73, "Section"],
+Cell[CellGroupData[{
+Cell[32868, 1007, 161, 2, 34, "Subsection"],
+Cell[33032, 1011, 654, 17, 56, "Text"],
+Cell[33689, 1030, 1363, 40, 58, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35089, 1075, 197, 2, 34, "Subsection"],
+Cell[35289, 1079, 153, 3, 26, "Text"],
+Cell[35445, 1084, 639, 18, 58, "Input"],
+Cell[36087, 1104, 328, 7, 41, "Text"],
+Cell[36418, 1113, 1095, 32, 88, "Input"],
+Cell[37516, 1147, 367, 7, 26, "Text"],
+Cell[37886, 1156, 1624, 47, 148, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39547, 1208, 237, 3, 34, "Subsection"],
+Cell[39787, 1213, 230, 4, 26, "Text"],
+Cell[40020, 1219, 117, 2, 27, "Input"],
+Cell[40140, 1223, 161, 2, 26, "Text"],
+Cell[40304, 1227, 142, 2, 27, "Input"]
+}, Open  ]]
+}, Closed]]
+}
+]
+*)
+
+(* End of internal cache information *)
