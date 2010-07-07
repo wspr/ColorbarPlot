@@ -20,9 +20,10 @@ Please send comments and suggestions to us both at
   wspr 81 at gmail dot com 
   michael dot p dot croucher at googlemail dot com
 
-Copyright 2007-2009
+Copyright 2007-2010
 Will Robertson (University of Adelaide)
 Mike Croucher (University of Manchester)
+Thomas Zell (University of Cologne)
 -----
 To-do
 - Horizontal colourbar above or below the plot.
@@ -31,6 +32,9 @@ To-do
 
 -------
 Changes
+
+v0.6 (TZ)
+More robust data and options handling. Extended the PlotRange option to be almost as powerful as the one of the built-in plot functions (there is still no difference between 'Full' and 'Automatic' for the z-range).
 
 v0.5 (MC)
 Added options for CTicksStyle and CLabelStyle to allow easy modification of the font styles in the colorbar ticks and label.  

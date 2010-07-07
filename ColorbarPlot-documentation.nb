@@ -10,11 +10,11 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[     44350,       1357]
-NotebookOptionsPosition[     40474,       1233]
-NotebookOutlinePosition[     40986,       1255]
-CellTagsIndexPosition[     40900,       1250]
-WindowFrame->Generic*)
+NotebookDataLength[     47715,       1455]
+NotebookOptionsPosition[     43607,       1326]
+NotebookOutlinePosition[     44120,       1348]
+CellTagsIndexPosition[     44034,       1343]
+WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
@@ -41,18 +41,23 @@ ColorbarPlot accepts and their\\ndefault options. Where multiple options are \
 listed, the first \\nis the default:\\n\\nGeneral:\\n  PlotType \[Rule] \
 \\\"Density\\\" | \\\"Contour\\\" | \\\"3D\\\" | \\\"Point3D\\\"\\n  \
 ColorFunction \[Rule] \\\"LakeColors\\\" | etc. \[Ellipsis] \\n  PlotRange \
-\[Rule] Automatic | {min,max}\\n\\nFor the plot:\\n  XLabel \[Rule] \
+\[Rule] Automatic | {min, max} | {{xmin, xmax}, {ymin, ymax}} |\\n    {{xmin \
+,xmax}, {ymin, ymax}, {zmin, zmax}}\\n\\nFor the plot:\\n  XLabel \[Rule] \
 \\\"\\\"\\n  YLabel \[Rule] \\\"\\\"\\n  ZLabel \[Rule] \\\"\\\"\\n  Title \
 \[Rule] \\\"\\\"\\n  Height \[Rule] 8*72/2.54  (=8cm)\\n\\nFor the \
 colorbar:\\n  CLabel \[Rule] \\\"\\\"\\n  CTicks \[Rule] All\\n  CTickSide \
-\[Rule] Left | Right\\n  CSide \[Rule] Right | Left\\n  \
-CTicksStyle->Automatic\\n  CLabelStyle->Automatic\\n  ColorbarOpts \[Rule] {}\
-\\n\\n\\nUnknown options to ColorbarPlot are passed transparently\\nto the \
-underlying plot function. Note that such options\\nare -not- passed to the \
-colorbar; use the ColorbarOpts \\noption for this purpose instead.\"\>", 
-  "MSG"]], "Print", "PrintUsage",
- CellChangeTimes->{3.464425125239917*^9},
- CellTags->"Info3464428723-6982589"]
+\[Rule] Left | Right\\n  CSide \[Rule] Right | Left\\n  CTicksStyle->{}\\n  \
+CLabelStyle->{}\\n  ColorbarOpts \[Rule] {}\\n\\n\\nUnknown options to \
+ColorbarPlot are passed transparently\\nto the underlying plot function. Note \
+that such options\\nare -not- passed to the colorbar; use the ColorbarOpts \
+\\noption for this purpose instead.\\n\\nThe x- and y-ranges of the PlotRange \
+option are passed directly\\nto the underlying plot function. The z-range \
+handling is not as\\nintelligent as the one of the built-in plot functions. \
+If set to\\n'Automatic' it will always cover the full range of the \
+supplied\\ndata, regardless of the subset chosen with the x- and \
+y-range.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellChangeTimes->{3.487479347910805*^9},
+ CellTags->"Info3487486547-3854386"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -492,7 +497,95 @@ Cell[BoxData[{
       RowBox[{"{", 
        RowBox[{
         RowBox[{"-", "1.5"}], ",", "0.8"}], "}"}]}]}], "]"}]}], 
-  "}"}]}], "Input"]
+  "}"}]}], "Input"],
+
+Cell[TextData[{
+ StyleBox["PlotRange", "Input"],
+ " can be specified for the x- and y-range of the plot:"
+}], "Text",
+ CellChangeTimes->{{3.487419847277476*^9, 3.487419863317403*^9}, 
+   3.487419974770751*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"data", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Sqrt", "[", 
+         RowBox[{
+          RowBox[{"x", "^", "2"}], "+", 
+          RowBox[{"y", "^", "2"}]}], "]"}], "<", "1"}], ",", 
+       RowBox[{"Sqrt", "[", 
+        RowBox[{"1", "-", 
+         RowBox[{"Sqrt", "[", 
+          RowBox[{
+           RowBox[{"x", "^", "2"}], "+", 
+           RowBox[{"y", "^", "2"}]}], "]"}]}], "]"}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "1"}], ",", "1", ",", "0.125"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", 
+       RowBox[{"-", "1"}], ",", "1", ",", "0.125"}], "}"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.487419872891318*^9, 3.487419873316559*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{"data", ",", 
+   RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+   RowBox[{"DataRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.487419896384309*^9, 3.487419907206314*^9}}],
+
+Cell["All ranges can be specified simultaneously :", "Text",
+ CellChangeTimes->{{3.487419847277476*^9, 3.487419863317403*^9}, {
+  3.487419927009278*^9, 3.487419976696268*^9}}],
+
+Cell[BoxData[
+ RowBox[{"ColorbarPlot", "[", 
+  RowBox[{"data", ",", 
+   RowBox[{"InterpolationOrder", "\[Rule]", "0"}], ",", 
+   RowBox[{"DataRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"PlotRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1.5"}], "}"}]}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.487419985043014*^9, 3.487419987880862*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1231,8 +1324,8 @@ Cell[BoxData[
 }, Open  ]]
 }, Closed]]
 },
-WindowSize->{1280, 949},
-WindowMargins->{{0, Automatic}, {Automatic, 25}},
+WindowSize->{1280, 1129},
+WindowMargins->{{Automatic, 1}, {Automatic, 0}},
 ShowSelection->True,
 FrontEndVersion->"7.0 for Linux x86 (32-bit) (February 25, 2009)",
 StyleDefinitions->"Default.nb"
@@ -1242,121 +1335,126 @@ StyleDefinitions->"Default.nb"
 (* Internal cache information *)
 (*CellTagsOutline
 CellTagsIndex->{
- "Info3464428723-6982589"->{
-  Cell[869, 32, 1538, 22, 784, "Print",
-   CellTags->"Info3464428723-6982589"]}
+ "Info3487486547-3854386"->{
+  Cell[868, 32, 1949, 27, 1295, "Print",
+   CellTags->"Info3487486547-3854386"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info3464428723-6982589", 40796, 1244}
+ {"Info3487486547-3854386", 43929, 1337}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[568, 22, 158, 2, 73, "Section"],
+Cell[567, 22, 158, 2, 108, "Section"],
 Cell[CellGroupData[{
-Cell[751, 28, 115, 2, 55, "Input"],
-Cell[869, 32, 1538, 22, 784, "Print",
- CellTags->"Info3464428723-6982589"]
+Cell[750, 28, 115, 2, 77, "Input"],
+Cell[868, 32, 1949, 27, 1295, "Print",
+ CellTags->"Info3487486547-3854386"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2444, 59, 100, 1, 39, "Subsection"],
-Cell[2547, 62, 195, 4, 51, "Text"],
-Cell[2745, 68, 2488, 68, 319, "Input"],
-Cell[5236, 138, 61, 0, 31, "Text"],
-Cell[5300, 140, 730, 24, 55, "Input"],
-Cell[6033, 166, 2244, 62, 275, "Input"]
+Cell[2854, 64, 100, 1, 56, "Subsection"],
+Cell[2957, 67, 195, 4, 73, "Text"],
+Cell[3155, 73, 2488, 68, 497, "Input"],
+Cell[5646, 143, 61, 0, 44, "Text"],
+Cell[5710, 145, 730, 24, 77, "Input"],
+Cell[6443, 171, 2244, 62, 437, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[8314, 233, 124, 2, 39, "Subsection"],
-Cell[8441, 237, 338, 12, 32, "Input"],
-Cell[8782, 251, 339, 6, 31, "Text"],
-Cell[9124, 259, 1345, 27, 55, "Input"],
-Cell[10472, 288, 61, 0, 31, "Text"],
-Cell[10536, 290, 476, 15, 55, "Input"]
+Cell[8724, 238, 124, 2, 84, "Subsection"],
+Cell[8851, 242, 338, 12, 69, "Input"],
+Cell[9192, 256, 339, 6, 108, "Text"],
+Cell[9534, 264, 1345, 27, 115, "Input"],
+Cell[10882, 293, 61, 0, 66, "Text"],
+Cell[10946, 295, 476, 15, 115, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[11049, 310, 103, 1, 39, "Subsection"],
-Cell[11155, 313, 34, 0, 31, "Text"],
-Cell[11192, 315, 902, 21, 187, "Input"]
+Cell[11459, 315, 103, 1, 84, "Subsection"],
+Cell[11565, 318, 34, 0, 66, "Text"],
+Cell[11602, 320, 902, 21, 385, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[12131, 341, 32, 0, 39, "Subsection"],
-Cell[12166, 343, 155, 3, 31, "Text"],
-Cell[12324, 348, 1010, 35, 77, "Input"],
-Cell[13337, 385, 121, 3, 31, "Text"],
-Cell[13461, 390, 1056, 37, 99, "Input"],
-Cell[14520, 429, 205, 7, 31, "Text"],
-Cell[14728, 438, 1759, 56, 121, "Input"]
+Cell[12541, 346, 32, 0, 84, "Subsection"],
+Cell[12576, 348, 155, 3, 66, "Text"],
+Cell[12734, 353, 1010, 35, 160, "Input"],
+Cell[13747, 390, 121, 3, 66, "Text"],
+Cell[13871, 395, 1056, 37, 205, "Input"],
+Cell[14930, 434, 205, 7, 67, "Text"],
+Cell[15138, 443, 1759, 56, 250, "Input"],
+Cell[16900, 501, 209, 5, 67, "Text"],
+Cell[17112, 508, 821, 25, 69, "Input"],
+Cell[17936, 535, 718, 22, 115, "Input"],
+Cell[18657, 559, 175, 2, 66, "Text"],
+Cell[18835, 563, 785, 24, 115, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[16524, 499, 111, 1, 39, "Subsection"],
-Cell[16638, 502, 108, 4, 31, "Text"],
-Cell[16749, 508, 801, 19, 99, "Input"],
-Cell[17553, 529, 142, 4, 31, "Text"],
-Cell[17698, 535, 671, 18, 121, "Input"],
-Cell[18372, 555, 126, 5, 31, "Text"],
-Cell[18501, 562, 674, 20, 99, "Input"],
-Cell[19178, 584, 201, 5, 31, "Text"],
-Cell[19382, 591, 505, 13, 77, "Input"],
-Cell[19890, 606, 246, 6, 31, "Text"],
-Cell[20139, 614, 719, 17, 99, "Input"],
-Cell[20861, 633, 319, 6, 31, "Text"],
-Cell[21183, 641, 995, 24, 143, "Input"]
+Cell[19657, 592, 111, 1, 84, "Subsection"],
+Cell[19771, 595, 108, 4, 67, "Text"],
+Cell[19882, 601, 801, 19, 205, "Input"],
+Cell[20686, 622, 142, 4, 67, "Text"],
+Cell[20831, 628, 671, 18, 250, "Input"],
+Cell[21505, 648, 126, 5, 67, "Text"],
+Cell[21634, 655, 674, 20, 205, "Input"],
+Cell[22311, 677, 201, 5, 67, "Text"],
+Cell[22515, 684, 505, 13, 160, "Input"],
+Cell[23023, 699, 246, 6, 67, "Text"],
+Cell[23272, 707, 719, 17, 205, "Input"],
+Cell[23994, 726, 319, 6, 67, "Text"],
+Cell[24316, 734, 995, 24, 295, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[22215, 670, 57, 0, 39, "Subsection"],
-Cell[22275, 672, 187, 7, 31, "Text"],
-Cell[22465, 681, 700, 20, 77, "Input"]
+Cell[25348, 763, 57, 0, 84, "Subsection"],
+Cell[25408, 765, 187, 7, 67, "Text"],
+Cell[25598, 774, 700, 20, 160, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[23202, 706, 121, 1, 39, "Subsection"],
-Cell[23326, 709, 334, 7, 51, "Text"],
-Cell[23663, 718, 579, 15, 99, "Input"]
+Cell[26335, 799, 121, 1, 84, "Subsection"],
+Cell[26459, 802, 334, 7, 150, "Text"],
+Cell[26796, 811, 579, 15, 205, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[24279, 738, 77, 0, 39, "Subsection"],
-Cell[24359, 740, 124, 3, 31, "Text"],
-Cell[24486, 745, 1145, 34, 55, "Input"],
-Cell[25634, 781, 353, 8, 51, "Text"],
-Cell[25990, 791, 1777, 50, 253, "Input"],
-Cell[27770, 843, 141, 4, 31, "Text"],
-Cell[27914, 849, 1922, 55, 231, "Input"]
+Cell[27412, 831, 77, 0, 84, "Subsection"],
+Cell[27492, 833, 124, 3, 66, "Text"],
+Cell[27619, 838, 1145, 34, 160, "Input"],
+Cell[28767, 874, 353, 8, 109, "Text"],
+Cell[29123, 884, 1777, 50, 520, "Input"],
+Cell[30903, 936, 141, 4, 67, "Text"],
+Cell[31047, 942, 1922, 55, 475, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[29873, 909, 48, 0, 39, "Subsection"],
-Cell[29924, 911, 318, 5, 51, "Text"],
-Cell[30245, 918, 487, 9, 51, "Text"],
-Cell[30735, 929, 171, 5, 32, "Input"],
-Cell[30909, 936, 787, 26, 99, "Input"],
-Cell[31699, 964, 291, 6, 31, "Text"],
-Cell[31993, 972, 621, 19, 99, "Input"]
+Cell[33006, 1002, 48, 0, 84, "Subsection"],
+Cell[33057, 1004, 318, 5, 108, "Text"],
+Cell[33378, 1011, 487, 9, 109, "Text"],
+Cell[33868, 1022, 171, 5, 69, "Input"],
+Cell[34042, 1029, 787, 26, 205, "Input"],
+Cell[34832, 1057, 291, 6, 67, "Text"],
+Cell[35126, 1065, 621, 19, 205, "Input"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[32663, 997, 180, 6, 73, "Section"],
+Cell[35796, 1090, 180, 6, 162, "Section"],
 Cell[CellGroupData[{
-Cell[32868, 1007, 161, 2, 34, "Subsection"],
-Cell[33032, 1011, 654, 17, 56, "Text"],
-Cell[33689, 1030, 1363, 40, 58, "Input"]
+Cell[36001, 1100, 161, 2, 76, "Subsection"],
+Cell[36165, 1104, 654, 17, 126, "Text"],
+Cell[36822, 1123, 1363, 40, 130, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[35089, 1075, 197, 2, 34, "Subsection"],
-Cell[35289, 1079, 153, 3, 26, "Text"],
-Cell[35445, 1084, 639, 18, 58, "Input"],
-Cell[36087, 1104, 328, 7, 41, "Text"],
-Cell[36418, 1113, 1095, 32, 88, "Input"],
-Cell[37516, 1147, 367, 7, 26, "Text"],
-Cell[37886, 1156, 1624, 47, 148, "Input"]
+Cell[38222, 1168, 197, 2, 76, "Subsection"],
+Cell[38422, 1172, 153, 3, 58, "Text"],
+Cell[38578, 1177, 639, 18, 130, "Input"],
+Cell[39220, 1197, 328, 7, 91, "Text"],
+Cell[39551, 1206, 1095, 32, 198, "Input"],
+Cell[40649, 1240, 367, 7, 58, "Text"],
+Cell[41019, 1249, 1624, 47, 333, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[39547, 1208, 237, 3, 34, "Subsection"],
-Cell[39787, 1213, 230, 4, 26, "Text"],
-Cell[40020, 1219, 117, 2, 27, "Input"],
-Cell[40140, 1223, 161, 2, 26, "Text"],
-Cell[40304, 1227, 142, 2, 27, "Input"]
+Cell[42680, 1301, 237, 3, 76, "Subsection"],
+Cell[42920, 1306, 230, 4, 58, "Text"],
+Cell[43153, 1312, 117, 2, 60, "Input"],
+Cell[43273, 1316, 161, 2, 58, "Text"],
+Cell[43437, 1320, 142, 2, 60, "Input"]
 }, Open  ]]
 }, Closed]]
 }

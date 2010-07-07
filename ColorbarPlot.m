@@ -5,8 +5,8 @@
 
 
 (* ::Text:: *)
-(*ColorbarPlot v0.5*)
-(*2009 Oct 13*)
+(*ColorbarPlot v0.6*)
+(*2010 Jul 7*)
 (**)
 (*ColorbarPlot is a function to plot a ContourPlot, DensityPlot or 3D plot with an attached colorbar to indicate the ranges of the function that is being plotted. The syntax is not exactly the same as for the built-in functions.*)
 (**)
@@ -26,9 +26,10 @@
 (*  wspr 81 at gmail dot com *)
 (*  michael dot p dot croucher at googlemail dot com*)
 (**)
-(*Copyright 2007-2009*)
+(*Copyright 2007-2010*)
 (*Will Robertson (University of Adelaide)*)
 (*Mike Croucher (University of Manchester)*)
+(*Thomas Zell (University of Cologne)*)
 
 
 (* ::Title:: *)
@@ -49,6 +50,14 @@
 
 (* ::Title:: *)
 (*Changes*)
+
+
+(* ::Subsubsection:: *)
+(*v0.6 (TZ)*)
+
+
+(* ::Text:: *)
+(*More robust data and options handling. Extended the PlotRange option to be almost as powerful as the one of the built-in plot functions (there is still no difference between 'Full' and 'Automatic' for the z-range).*)
 
 
 (* ::Subsubsection:: *)
@@ -126,7 +135,8 @@ is the default:
 General:
   PlotType \[Rule] \"Density\" | \"Contour\" | \"3D\" | \"Point3D\"
   ColorFunction \[Rule] \"LakeColors\" | etc. \[Ellipsis] 
-  PlotRange \[Rule] Automatic | {min,max}
+  PlotRange \[Rule] Automatic | {min, max} | {{xmin, xmax}, {ymin, ymax}} |
+    {{xmin ,xmax}, {ymin, ymax}, {zmin, zmax}}
 
 For the plot:
   XLabel \[Rule] \"\"
@@ -148,7 +158,13 @@ For the colorbar:
 Unknown options to ColorbarPlot are passed transparently
 to the underlying plot function. Note that such options
 are -not- passed to the colorbar; use the ColorbarOpts 
-option for this purpose instead.";
+option for this purpose instead.
+
+The x- and y-ranges of the PlotRange option are passed directly
+to the underlying plot function. The z-range handling is not as
+intelligent as the one of the built-in plot functions. If set to
+'Automatic' it will always cover the full range of the supplied
+data, regardless of the subset chosen with the x- and y-range.";
 
 
 Begin["`Private`"]
@@ -203,7 +219,11 @@ ColorbarPlot[function_,{___,x1_,x2_},{___,y1_,y2_},opts___] :=
 
 
 ColorbarPlot[listplotdata_,opts___] := 
-  InternalColorbarPlot["listplot",{listplotdata},opts];
+  InternalColorbarPlot["listplot",{listplotdata},opts] /;
+    If[ArrayQ[listplotdata],
+      If[MatchQ[Dimensions[listplotdata], {x_, y_} /; x>1 && y>1], True,
+      	Message[ColorbarPlot::dimerr]; False],
+      Message[ColorbarPlot::arrayerr]; False];
 
 
 (* ::Subsection:: *)
@@ -258,7 +278,8 @@ InternalColorbarPlot[parseplot_,plotinput_,
  bartype, barticks, 
  colorbar, cbarside, contours, frameticks,
  labels, plot, plottype, inputrange,
- listplot = False },
+ listplot = False, xrange = Full,
+ yrange = Full, zrange = {Full, Full} },
 
 
 
@@ -331,7 +352,7 @@ Evaluate@Opt@PlotType == "Contour",
     plottype = ContourPlot];
   bartype = ContourPlot;
   colours = ColorFunction -> 
-    (ColorData[Opt@ColorFunction][(#1-min)/(max-min)]&);
+    (ColorData[Opt@ColorFunction][(#1-zrange[[1]])/(zrange[[2]]-zrange[[1]])]&);
   labels = FrameLabel -> {{Opt@YLabel,None},
                           {Opt@XLabel,Opt@Title}};
 ,
@@ -367,7 +388,7 @@ Evaluate@Opt@PlotType == "Density",
     plottype = DensityPlot];
   bartype = DensityPlot;
   colours = ColorFunction -> 
-    (ColorData[Opt@ColorFunction][(#1-min)/(max-min)]&);
+    (ColorData[Opt@ColorFunction][(#1-zrange[[1]])/(zrange[[2]]-zrange[[1]])]&);
   labels = FrameLabel -> {{Opt@YLabel,None},
                           {Opt@XLabel,Opt@Title}};
 ,
@@ -403,7 +424,7 @@ Evaluate@Opt@PlotType == "Hybrid",
     plottype = DensityPlot];
   bartype = DensityPlot;
   colours = ColorFunction -> 
-    (ColorData[Opt@ColorFunction][(#1-min)/(max-min)]&);
+    (ColorData[Opt@ColorFunction][(#1-zrange[[1]])/(zrange[[2]]-zrange[[1]])]&);
   labels = FrameLabel -> {{Opt@YLabel,None},
                           {Opt@XLabel,Opt@Title}};
 ,
@@ -439,7 +460,7 @@ Evaluate@Opt@PlotType == "3D",
     plottype = Plot3D];
   bartype = DensityPlot;
   colours = ColorFunction -> 
-    (ColorData[Opt@ColorFunction][(#3-min)/(max-min)]&);
+    (ColorData[Opt@ColorFunction][(#3-zrange[[1]])/(zrange[[2]]-zrange[[1]])]&);
   labels = {PlotLabel -> Opt@Title,
           AxesLabel -> {Opt@XLabel,Opt@YLabel,Opt@ZLabel}};
 ,
@@ -473,7 +494,7 @@ Evaluate@Opt@PlotType == "Point3D",
   plottype = ListPointPlot3D;
   bartype = DensityPlot;
   colours = ColorFunction -> 
-    (ColorData[Opt@ColorFunction][(#3-min)/(max-min)]&);
+    (ColorData[Opt@ColorFunction][(#3-zrange[[1]])/(zrange[[2]]-zrange[[1]])]&);
   labels = {PlotLabel -> Opt@Title,
           AxesLabel -> {Opt@XLabel,Opt@YLabel,Opt@ZLabel}};
 ];
@@ -530,7 +551,7 @@ If[listplot,
 (*If we have a set of {x,y,f} triplets then extract the max/min from the f dimension:*)
 
 
-  If[Dimensions[plotinput][[3]]==3,
+  If[Length[Dimensions[plotinput]] == 3 && Dimensions[plotinput][[3]]==3,
     max=Max[plotinput[[All,3]]];
     min=Min[plotinput[[All,3]]];
   ,
@@ -560,8 +581,8 @@ If[listplot,
 (*Else it's something like {{f11,f12,\[Ellipsis]},{f21,f22,\[Ellipsis]},\[Ellipsis]} and we can just use Min/Max directly:*)
 
 
-    min=Min[plotinput];
-    max=Max[plotinput];
+    min=Min[Select[Flatten@plotinput,NumericQ]];
+    max=Max[Select[Flatten@plotinput,NumericQ]];
   ];
 ,
 
@@ -623,26 +644,41 @@ If[listplot,
 
 ];  
 
+(* ::Text:: *)
+(*check min & max values for validity:*)
+
+If[!NumericQ[min] || !NumericQ[max], Message[ColorbarPlot::minmaxerr]; Return[$Failed]];
+
+
+(* ::Text:: *)
+(*Patterns to parse PlotRange option:*)
+
+FindRange[x_] :=  Module[{}, zrange = {Full, Full};] /; x === Full || x === Automatic || x === All;
+
+FindRange[x_?NumericQ] := Module[{}, zrange = {-x, x};];
+
+FindRange[{x_, y_}] := Module[{}, 
+   zrange = {x, y};] /;
+   (NumericQ[x] || x === Full || x === Automatic || x === All) &&
+   (NumericQ[y] || y === Full || y === Automatic || y === All);
+
+FindRange[{xr_, yr_}] := Module[{}, xrange = xr; yrange = yr;];
+
+FindRange[{xr_, yr_, zr_}] := Module[{}, xrange = xr; yrange = yr; FindRange[zr];] /; 
+   !MatchQ[zr, {_, _, _}];
+
+FindRange[x_] := Message[ColorbarPlot::rangeerr];
+
 
 (* ::Text:: *)
 (*Finally, set the PlotRange based on the data above:*)
 
+FindRange[Evaluate@Opt@PlotRange];
 
-plotrange := PlotRange -> {min,max};
+If[zrange[[1]] === Full, zrange[[1]] = min];
+If[zrange[[2]] === Full, zrange[[2]] = max];
 
-
-(* ::Subsection:: *)
-(*Setting the manual colorbar range*)
-
-
-tmp = Evaluate@Opt@PlotRange;
-If[ tmp =!= Automatic && tmp =!= Full,
-  If[ First@tmp =!= Automatic && First@tmp =!= Full,
-    min = First@Opt@PlotRange ];
-  If[ Last@tmp =!= Automatic && Last@tmp =!= Full,
-    max = Last@Opt@PlotRange ];
-];
-
+If[zrange[[1]] == zrange[[2]], zrange[[2]] = zrange[[1]] + 1]; (* avoid division by zero in ColorFunction *)
 
 (* ::Subsection:: *)
 (*Specification of the colorbar tickmarks*)
@@ -711,7 +747,7 @@ plot = plottype[
   Evaluate@plotrules,
   ImageSize -> {Automatic,Opt@Height},
   ColorFunctionScaling -> False,
-  Evaluate@Sequence@plotrange,
+  PlotRange -> {xrange, yrange, zrange},
   Evaluate@Sequence@colours,
   Evaluate@Sequence@labels
 ];
@@ -722,14 +758,14 @@ plot = plottype[
 
 
 colorbar = bartype[
-  y,{x,0,1},{y,min,max},
+  y,{x,0,1},{y,zrange[[1]],zrange[[2]]},
   Evaluate@Sequence@Opt@ColorbarOpts,
   ImageSize -> {Automatic,Opt@Height},
   ImagePadding -> Evaluate@colorbarpadding,
   ColorFunctionScaling -> False,
-  ColorFunction -> (ColorData[Opt@ColorFunction][(#1-min)/(max-min)]&),
+  ColorFunction -> (ColorData[Opt@ColorFunction][(#1-zrange[[1]])/(zrange[[2]]-zrange[[1]])]&),
   Evaluate@Sequence@contours,
-  Evaluate@Sequence@plotrange,
+  PlotRange -> zrange,
   AspectRatio -> 10,
   FrameTicksStyle->Evaluate@Opt@CTicksStyle,
   PlotRangePadding -> 0,
@@ -764,7 +800,18 @@ Graphics[
 CPadding::wrongdimen := 
   "Wrong input for CPadding. Use \" CPadding -> { horiz , vert } \"";
 
+ColorbarPlot::arrayerr :=
+  "Argument must be a valid array.";
 
+ColorbarPlot::dimerr :=
+  "Argument must be a rectangular array of at least 2x2.";
+
+ColorbarPlot::minmaxerr :=
+  "Could not determine minimum and maximum value of plot data.";
+
+ColorbarPlot::rangeerr :=
+  "Could not parse the PlotRange option.";
+  
 (* ::Section::Closed:: *)
 (*End*)
 
