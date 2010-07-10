@@ -20,11 +20,12 @@
 (**)
 (*An example file, ColorbarPlot-documentation.nb, is distributed with this package to demonstrate its use.*)
 (**)
-(*This package has been written with and for Mathematica 7.0.1. It may work in previous versions of Mathematica but definitely not on anything pre v6.*)
+(*This package should work for Mathematica versions six and later.*)
 (**)
-(*Please send comments and suggestions to us both at*)
+(*Please send comments and suggestions to us at*)
 (*  wspr 81 at gmail dot com *)
 (*  michael dot p dot croucher at googlemail dot com*)
+(*   t.zell at gmx dot de*)
 (**)
 (*Copyright 2007-2010*)
 (*Will Robertson (University of Adelaide)*)
@@ -214,7 +215,7 @@ ColorbarPlot[function_,{___,x1_,x2_},{___,y1_,y2_},opts___] :=
     {function,{x,x1,x2},{y,y1,y2}},opts];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*All List-based plots*)
 
 
@@ -269,6 +270,8 @@ InternalColorbarPlot[parseplot_,plotinput_,
 
 
 
+
+
 (* ::Subsection:: *)
 (*Local variables*)
 
@@ -280,6 +283,8 @@ InternalColorbarPlot[parseplot_,plotinput_,
  labels, plot, plottype, inputrange,
  listplot = False, xrange = Full,
  yrange = Full, zrange = {Full, Full} },
+
+
 
 
 
@@ -342,6 +347,8 @@ Which[
 
 
 
+
+
 (* ::Subsubsection:: *)
 (*(List)ContourPlot*)
 
@@ -356,6 +363,8 @@ Evaluate@Opt@PlotType == "Contour",
   labels = FrameLabel -> {{Opt@YLabel,None},
                           {Opt@XLabel,Opt@Title}};
 ,
+
+
 
 
 
@@ -414,6 +423,8 @@ Evaluate@Opt@PlotType == "Density",
 
 
 
+
+
 (* ::Subsubsection:: *)
 (*Hybrid*)
 
@@ -450,6 +461,8 @@ Evaluate@Opt@PlotType == "Hybrid",
 
 
 
+
+
 (* ::Subsubsection:: *)
 (*(List)Plot3D*)
 
@@ -464,6 +477,8 @@ Evaluate@Opt@PlotType == "3D",
   labels = {PlotLabel -> Opt@Title,
           AxesLabel -> {Opt@XLabel,Opt@YLabel,Opt@ZLabel}};
 ,
+
+
 
 
 
@@ -547,6 +562,8 @@ If[listplot,
 
 
 
+
+
 (* ::Text:: *)
 (*If we have a set of {x,y,f} triplets then extract the max/min from the f dimension:*)
 
@@ -577,6 +594,8 @@ If[listplot,
 
 
 
+
+
 (* ::Text:: *)
 (*Else it's something like {{f11,f12,\[Ellipsis]},{f21,f22,\[Ellipsis]},\[Ellipsis]} and we can just use Min/Max directly:*)
 
@@ -585,6 +604,8 @@ If[listplot,
     max=Max[Select[Flatten@plotinput,NumericQ]];
   ];
 ,
+
+
 
 
 
@@ -644,14 +665,18 @@ If[listplot,
 
 ];  
 
+
+
 (* ::Text:: *)
 (*check min & max values for validity:*)
+
 
 If[!NumericQ[min] || !NumericQ[max], Message[ColorbarPlot::minmaxerr]; Return[$Failed]];
 
 
 (* ::Text:: *)
 (*Patterns to parse PlotRange option:*)
+
 
 FindRange[x_] :=  Module[{}, zrange = {Full, Full};] /; x === Full || x === Automatic || x === All;
 
@@ -673,12 +698,15 @@ FindRange[x_] := Message[ColorbarPlot::rangeerr];
 (* ::Text:: *)
 (*Finally, set the PlotRange based on the data above:*)
 
+
 FindRange[Evaluate@Opt@PlotRange];
 
 If[zrange[[1]] === Full, zrange[[1]] = min];
 If[zrange[[2]] === Full, zrange[[2]] = max];
 
 If[zrange[[1]] == zrange[[2]], zrange[[2]] = zrange[[1]] + 1]; (* avoid division by zero in ColorFunction *)
+
+
 
 (* ::Subsection:: *)
 (*Specification of the colorbar tickmarks*)
@@ -812,7 +840,9 @@ ColorbarPlot::minmaxerr :=
 ColorbarPlot::rangeerr :=
   "Could not parse the PlotRange option.";
   
-(* ::Section::Closed:: *)
+
+
+(* ::Section:: *)
 (*End*)
 
 
