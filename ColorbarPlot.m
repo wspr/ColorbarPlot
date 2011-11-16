@@ -194,6 +194,7 @@ Options[ColorbarPlot]={
   ZLabel   -> "",
   Title    -> "",
   Height   -> 8*72/2.54,
+  Overlay  -> "",
 (* for the colorbar: *)
   CLabel   -> "",
   CTicks   -> All,
@@ -252,26 +253,6 @@ InternalColorbarPlot[parseplot_,plotinput_,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* ::Subsection:: *)
 (*Local variables*)
 
@@ -283,26 +264,6 @@ InternalColorbarPlot[parseplot_,plotinput_,
  labels, plot, plottype, inputrange,
  listplot = False, xrange = Full,
  yrange = Full, zrange = {Full, Full} },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -329,26 +290,6 @@ Which[
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* ::Subsubsection:: *)
 (*(List)ContourPlot*)
 
@@ -363,26 +304,6 @@ Evaluate@Opt@PlotType == "Contour",
   labels = FrameLabel -> {{Opt@YLabel,None},
                           {Opt@XLabel,Opt@Title}};
 ,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -405,26 +326,6 @@ Evaluate@Opt@PlotType == "Density",
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* ::Subsubsection:: *)
 (*Hybrid*)
 
@@ -443,26 +344,6 @@ Evaluate@Opt@PlotType == "Hybrid",
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* ::Subsubsection:: *)
 (*(List)Plot3D*)
 
@@ -477,26 +358,6 @@ Evaluate@Opt@PlotType == "3D",
   labels = {PlotLabel -> Opt@Title,
           AxesLabel -> {Opt@XLabel,Opt@YLabel,Opt@ZLabel}};
 ,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -544,26 +405,6 @@ If[listplot,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* ::Text:: *)
 (*If we have a set of {x,y,f} triplets then extract the max/min from the f dimension:*)
 
@@ -576,26 +417,6 @@ If[listplot,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 (* ::Text:: *)
 (*Else it's something like {{f11,f12,\[Ellipsis]},{f21,f22,\[Ellipsis]},\[Ellipsis]} and we can just use Min/Max directly:*)
 
@@ -604,26 +425,6 @@ If[listplot,
     max=Max[Select[Flatten@plotinput,NumericQ]];
   ];
 ,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -779,6 +580,8 @@ plot = plottype[
   Evaluate@Sequence@colours,
   Evaluate@Sequence@labels
 ];
+
+If[ Opt@Overlay === "" ,Null, plot = Show[{plot,Opt@Overlay}]; ];
 
 
 (* ::Subsection:: *)
